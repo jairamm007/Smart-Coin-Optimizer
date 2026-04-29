@@ -1,6 +1,19 @@
-backend/node_modules/
+# Node.js
+node_modules/
+package-lock.json
+
+# C program build artifacts
 c_program/coin
 c_program/coin.exe
-c_program/coin_check.exe
-c_program/coin_verify.exe
+c_program/*.o
+
+# Runtime files
 c_program/history.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea

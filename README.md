@@ -1,68 +1,88 @@
-# coinoptimiser
+# Smart Coin Optimizer
 
-Coin Optimizer is split into a Node.js backend, a static frontend, and a C program for the coin algorithms.
+A full-stack web application that compares **Greedy** and **Dynamic Programming** algorithms for solving the coin change problem. Built with Node.js backend, C algorithms, and a modern frontend dashboard.
 
-## Structure
+## Features
 
-```text
+- 🪙 Compare Greedy vs DP algorithms in real-time
+- 📊 Interactive dashboard with visualization
+- 💾 History tracking with export functionality
+- ⚡ High-performance C implementation
+- 🪟 Cross-platform (Windows, Linux, macOS)
+- ✅ Input validation and error handling
+
+## Project Structure
+
+```
 coin_optimiser/
-├── backend/
-│   ├── server.js
+├── backend/              # Node.js Express server
+│   ├── server.js         # API endpoints & frontend serving
 │   ├── package.json
 │   └── package-lock.json
-├── c_program/
-│   ├── coin_optimizer.c
-│   ├── Makefile
-│   ├── coin.exe        # Windows build output
-│   └── history.txt
-├── frontend/
+├── c_program/            # Coin algorithm implementation
+│   ├── coin_optimizer.c  # Greedy & DP algorithms
+│   ├── Makefile          # Cross-platform build
+│   └── history.txt       # Runtime history (auto-generated)
+├── frontend/             # Web dashboard
 │   ├── index.html
 │   ├── style.css
 │   └── script.js
-├── .gitignore
 └── README.md
 ```
 
+## Prerequisites
+
+- Node.js 14+
+- GCC compiler (for building C program)
+
+## Quick Start
+
+1. **Install backend dependencies:**
+   ```bash
+   cd backend
+   npm install
+   ```
+
+2. **Build the C program:**
+   ```bash
+   cd ../c_program
+   make
+   ```
+   On Windows, this generates `coin.exe`. On Linux/Mac, generates `coin`.
+
+3. **Start the server:**
+   ```bash
+   cd ../backend
+   npm start
+   ```
+
+4. **Open in browser:**
+   ```
+   http://localhost:3000
+   ```
+
 ## How It Works
 
-- `backend/server.js` serves the frontend and exposes the API.
-- The backend runs the compiled binary from `c_program/`.
-- Web optimizations are written to `c_program/history.txt` in the exact file format used by the C program.
-- The frontend is a dashboard-style single page interface with input, results, and history panels.
+- **Frontend**: Dashboard for input, displays results with comparison and history
+- **Backend**: Express.js API that routes requests to the compiled C binary
+- **C Program**: Implements both Greedy and DP solutions for coin change problem
+- **History**: All computations are saved to `history.txt` for tracking
 
-## Run Locally
+## API Endpoints
 
-1. Install backend dependencies:
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/optimize` | Run coin optimization |
+| GET | `/api/history` | Fetch all history entries |
+| DELETE | `/api/history` | Clear all history |
+| DELETE | `/api/history/:id` | Delete specific entry |
+| GET | `/api/export-history` | Export history as file |
 
-```bash
-cd backend
-npm install
-```
+## Algorithm Details
 
-2. Compile the C program:
+- **Greedy**: Takes largest coins first (fast but not always optimal)
+- **DP**: Dynamic programming solution (always optimal, slightly slower)
 
-```bash
-cd ../c_program
-gcc -Wall -Wextra -O2 -o coin coin_optimizer.c
-```
+## License
 
-3. Start the backend:
-
-```bash
-cd ../backend
-npm start
-```
-
-4. Open the app in your browser:
-
-```text
-http://localhost:3000
-```
-
-## API
-
-- `POST /api/optimize`
-- `GET /api/history`
-- `DELETE /api/history`
-- `DELETE /api/history/:id`
-- `GET /api/export-history`
+MIT
