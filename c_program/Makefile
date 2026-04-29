@@ -3,15 +3,23 @@ CFLAGS = -Wall -Wextra -O2
 TARGET = coin
 SRC = coin_optimizer.c
 
-all: $(TARGET)
+ifeq ($(OS),Windows_NT)
+    EXE = .exe
+    RM = del /Q
+else
+    EXE =
+    RM = rm -f
+endif
 
-$(TARGET): $(SRC)
-	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)
+all: $(TARGET)$(EXE)
 
-run: $(TARGET)
-	./$(TARGET)
+$(TARGET)$(EXE): $(SRC)
+	$(CC) $(CFLAGS) -o $(TARGET)$(EXE) $(SRC)
+
+run: $(TARGET)$(EXE)
+	./$(TARGET)$(EXE)
 
 clean:
-	rm -f $(TARGET)
+	-$(RM) $(TARGET)$(EXE)
 
 .PHONY: all run clean
