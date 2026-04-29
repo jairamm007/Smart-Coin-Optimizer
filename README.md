@@ -74,6 +74,12 @@ coin_optimiser/
 - **Greedy**: Takes largest coins first (fast but not always optimal)
 - **DP**: Dynamic programming solution (always optimal, slightly slower)
 
+## Languages & Technologies
+
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+
 ## License
 
 MIT
