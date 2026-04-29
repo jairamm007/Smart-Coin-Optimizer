@@ -11,6 +11,23 @@ A full-stack web application that compares **Greedy** and **Dynamic Programming*
 - 🪟 Cross-platform (Windows, Linux, macOS)
 - ✅ Input validation and error handling
 
+## Quick Start
+
+1. **Open the live project:**
+   ```
+   https://smart-coin-optimizer.onrender.com
+   ```
+
+2. **Use the app in your browser:**
+   - Enter coin values and amount
+   - Compare Greedy vs DP results
+   - View history and export data
+
+3. **Optional local run:**
+   - Install backend dependencies
+   - Build the C program
+   - Start the backend server
+
 ## Project Structure
 
 ```
@@ -34,32 +51,6 @@ coin_optimiser/
 
 - Node.js 14+
 - GCC compiler (for building C program)
-
-## Quick Start
-
-1. **Install backend dependencies:**
-   ```bash
-   cd backend
-   npm install
-   ```
-
-2. **Build the C program:**
-   ```bash
-   cd ../c_program
-   make
-   ```
-   On Windows, this generates `coin.exe`. On Linux/Mac, generates `coin`.
-
-3. **Start the server:**
-   ```bash
-   cd ../backend
-   npm start
-   ```
-
-4. **Open in browser:**
-   ```
-   http://localhost:3000
-   ```
 
 ## How It Works
 
