@@ -1,0 +1,13 @@
+* linguist-auto
+
+# C Program
+*.c linguist-language=C
+*.h linguist-language=C
+c_program/** linguist-detectable=true
+
+# JavaScript
+*.js linguist-language=JavaScript
+frontend/** linguist-detectable=true
+
+# Ensure these are counted
+Makefile linguist-detectable=true
