@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coinoptimiser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand-mark">
+                <svg class="brand-coin" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <defs>
+                        <radialGradient id="coinGlow" cx="35%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fff6cc"/>
+                            <stop offset="55%" stop-color="#f6c54f"/>
+                            <stop offset="100%" stop-color="#b97a10"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="32" cy="32" r="28" fill="url(#coinGlow)" stroke="#ffe28a" stroke-width="2"/>
+                    <circle cx="32" cy="32" r="22" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2"/>
+                    <path d="M32 18l3.6 7.3 8.1 1.2-5.8 5.7 1.4 8.1-7.3-3.9-7.3 3.9 1.4-8.1-5.8-5.7 8.1-1.2z" fill="#fff1b8" opacity="0.95"/>
+                </svg>
+                <div>
+                    <p class="brand-name">SMART COIN OPTIMIZER</p>
+                </div>
+            </div>
+
+            <nav class="topnav" aria-label="Primary">
+                <a class="topnav-link active" href="#dashboard">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="container dashboard" id="dashboard">
+            <section class="dashboard-grid">
+                <section class="panel configure-panel">
+                    <div class="panel-title-row">
+                        <h2>Input</h2>
+                        <span class="panel-kicker">Enter coins and amount to optimize</span>
+                    </div>
+
+                    <form id="optimizerForm" class="optimizer-form">
+                        <div class="form-group form-group-large">
+                            <label for="coinValues">Coin Denominations</label>
+                            <input type="text" id="coinValues" placeholder="e.g., 1 5 10 25" value="1 5 10" required>
+                        </div>
+
+                        <div class="form-group form-group-small">
+                            <label for="amount">Amount</label>
+                            <input type="number" id="amount" min="1" max="1000" value="42" required>
+                        </div>
+
+                        <div class="form-group form-group-small">
+                            <label for="numCoins">Coin Types</label>
+                            <input type="number" id="numCoins" min="1" max="20" value="3" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Optimize</button>
+                            <button type="button" id="exportHistoryBtn" class="btn btn-secondary">Download History.txt</button>
+                            <button type="button" id="clearHistoryBtn" class="btn btn-secondary">Clear History</button>
+                        </div>
+                    </form>
+
+                    <div class="preset-row">
+                        <span class="preset-label">Quick Try</span>
+                        <button type="button" class="preset-pill" data-amount="20" data-coins="1 5 6" data-num-coins="3">₹20 - [1,5,6]</button>
+                        <button type="button" class="preset-pill" data-amount="11" data-coins="1 5 6 9" data-num-coins="4">₹11 - [1,5,6,9]</button>
+                        <button type="button" class="preset-pill" data-amount="30" data-coins="1 5 10 25" data-num-coins="4">₹30 - [1,5,10,25]</button>
+                    </div>
+
+                    <div class="tip-card">
+                        <p class="tip-title">Tip</p>
+                        <p class="tip-text">The optimizer compares Greedy approach with Dynamic Programming.</p>
+                    </div>
+                </section>
+
+                <section class="dashboard-main">
+                    <section class="panel results-panel">
+                        <div class="panel-title-row">
+                            <h2>Results</h2>
+                            <span class="panel-kicker">Comparison of Greedy vs Dynamic Programming</span>
+                        </div>
+
+                        <section class="winner-banner" id="winnerBanner" hidden>
+                            <div class="winner-banner-text" id="winnerBannerText">Waiting for comparison...</div>
+                        </section>
+
+                        <section class="results-section" id="resultsSection" hidden>
+                            <div class="results-grid">
+                                <article class="result-card greedy-card">
+                                    <div class="result-card-top">
+                                        <div>
+                                            <p class="algorithm-label algorithm-label-greedy">Greedy</p>
+                                            <div class="big-count" id="greedyCount">0</div>
+                                            <p class="count-caption">coins used</p>
+                                        </div>
+                                        <span class="status-pill" id="greedyStatus">Review</span>
+                                    </div>
+
+                                    <div class="chips" id="greedyCoins"></div>
+                                    <div class="coin-path" id="greedyPath"></div>
+                                    <p class="equation" id="greedyEquation">-</p>
+                                </article>
+
+                                <article class="result-card dp-card">
+                                    <div class="result-card-top">
+                                        <div>
+                                            <p class="algorithm-label algorithm-label-dp">Dynamic Programming</p>
+                                            <div class="big-count" id="dpCount">0</div>
+                                            <p class="count-caption">coins used</p>
+                                        </div>
+                                        <span class="status-pill" id="dpStatus">Optimal</span>
+                                    </div>
+
+                                    <div class="chips" id="dpCoins"></div>
+                                    <div class="coin-path" id="dpPath"></div>
+                                    <p class="equation" id="dpEquation">-</p>
+                                </article>
+                            </div>
+
+                            <article class="panel comparison-panel">
+                                <div class="panel-title-row">
+                                    <h2>Comparison</h2>
+                                    <span class="panel-kicker">Lower coin count is better.</span>
+                                </div>
+
+                                <div class="comparison-bars">
+                                    <div class="compare-row">
+                                        <span class="compare-name greedy-text">Greedy</span>
+                                        <div class="compare-bar-track">
+                                            <div class="compare-bar compare-bar-greedy" id="greedyBar"></div>
+                                        </div>
+                                        <span class="compare-value" id="greedyBarLabel">0 coins</span>
+                                    </div>
+
+                                    <div class="compare-row">
+                                        <span class="compare-name dp-text">DP</span>
+                                        <div class="compare-bar-track">
+                                            <div class="compare-bar compare-bar-dp" id="dpBar"></div>
+                                        </div>
+                                        <span class="compare-value" id="dpBarLabel">0 coins</span>
+                                    </div>
+                                </div>
+
+                                <p class="comparison-summary" id="efficiency">Both algorithms are equally efficient.</p>
+                                <p class="comparison-amount">Amount solved: <span id="resultAmount">0</span></p>
+                            </article>
+                        </section>
+                    </section>
+
+                    <section class="panel history-panel">
+                        <div class="panel-title-row">
+                            <h2>History</h2>
+                            <div class="history-actions">
+                                <span class="panel-kicker">Past optimizations</span>
+                                <button type="button" id="viewAllHistoryBtn" class="btn btn-secondary btn-small">View All</button>
+                                <button type="button" id="clearHistoryBtn" class="btn btn-secondary btn-small history-clear-btn">Clear History</button>
+                            </div>
+                        </div>
+
+                        <div class="history-container" id="historyContainer">
+                            <p class="empty-state">No history yet. Perform an optimization to see results.</p>
+                        </div>
+                    </section>
+                </section>
+            </section>
+
+            <footer class="footer">
+                <span class="footer-brand">Smart Coin Optimizer</span>
+                <span>Built with C, Node.js, and a modern web dashboard</span>
+            </footer>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
